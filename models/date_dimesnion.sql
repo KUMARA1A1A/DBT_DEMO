@@ -1,0 +1,29 @@
+WITH CTE AS (
+Select
+
+To_TIMESTAMP(STARTED_AT) as TIME_STAMP,
+Date(TIME_STAMP) as DATE_STARTED_AT,
+Hour(TIME_STAMP) as Hour_STARTED_AT,
+DAYNAME(TIME_STAMP) as Day_STARTED_AT,
+
+CASE
+WHEN DAYNAME(TIME_STAMP) in ('Sat','Sun')
+THEN 'WEEKEND'
+ELSE 'BUSINESSDAY'
+END AS DAY_TYPE,
+
+CASE 
+WHEN Month(TIME_STAMP) in (12,1,2)
+    THEN 'WINTER'
+    WHEN Month(TIME_STAMP) in (3,4,5)
+    THEN 'SPRING'
+    WHEN Month(TIME_STAMP) in (6,7,8)
+    THEN 'SUMMER'
+    ELSE 'AUTUM'
+    END AS SEASON_OF_YEAR
+from 
+{{ source('demo', 'bike') }}
+)
+
+Select*
+from CTE
