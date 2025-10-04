@@ -12,15 +12,8 @@ THEN 'WEEKEND'
 ELSE 'BUSINESSDAY'
 END AS DAY_TYPE,
 
-CASE 
-WHEN Month(TIME_STAMP) in (12,1,2)
-    THEN 'WINTER'
-    WHEN Month(TIME_STAMP) in (3,4,5)
-    THEN 'SPRING'
-    WHEN Month(TIME_STAMP) in (6,7,8)
-    THEN 'SUMMER'
-    ELSE 'AUTUM'
-    END AS SEASON_OF_YEAR
+{{function1('TIME_STAMP')}} AS SEASON_OF_YEAR
+
 from 
 {{ source('demo', 'bike') }}
 )
