@@ -1,0 +1,22 @@
+WITH CTE AS (
+Select
+
+To_TIMESTAMP(STARTED_AT) as TIME_STAMP,
+Date(TIME_STAMP) as DATE_STARTED_AT,
+Hour(TIME_STAMP) as Hour_STARTED_AT,
+DAYNAME(TIME_STAMP) as Day_STARTED_AT,
+
+CASE
+WHEN DAYNAME(TIME_STAMP) in ('Sat','Sun')
+THEN 'WEEKEND'
+ELSE 'BUSINESSDAY'
+END AS DAY_TYPE,
+
+{{function1('TIME_STAMP')}} AS SEASON_OF_YEAR
+
+from 
+{{ ref('stage_bike') }}
+)
+
+Select*
+from CTE
