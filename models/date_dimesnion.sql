@@ -15,7 +15,7 @@ END AS DAY_TYPE,
 {{function1('TIME_STAMP')}} AS SEASON_OF_YEAR
 
 from 
-{{ source('demo', 'bike') }}
+{{ ref('stage_bike') }}
 )
 
 Select*
